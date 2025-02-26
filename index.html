@@ -2,110 +2,215 @@
 <html>
 <head>
     <title>Pesan Perpisahan Kelas</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
             font-family: Arial, sans-serif;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 16px;
+            background-color: #f0f2f5;
+            height: 100vh; /* Tinggi penuh untuk perangkat mobile */
+        }
+        
+        .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
+        
+        .header {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1rem;
+        }
+        
         .input-section {
             text-align: center;
-            margin: 20px 0;
+            margin: 10px 0;
             padding: 20px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
         input {
-            padding: 10px;
+            padding: 14px;
             font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            margin-right: 10px;
+            width: 100%;
         }
+        
         button {
-            padding: 10px 20px;
+            padding: 14px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
         }
-        button:hover {
+        
+        button:hover, button:active {
             background-color: #45a049;
         }
+        
+        .error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        #messageContainer {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+        
         .message {
             display: none;
-            margin: 20px 0;
+            margin: 15px 0;
             padding: 20px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             animation: fadeIn 0.5s;
         }
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-        .header {
-            text-align: center;
+        
+        .message h3 {
+            margin-bottom: 10px;
             color: #333;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
         }
-        .error {
-            color: red;
-            margin-top: 10px;
-            display: none;
+        
+        .message p {
+            line-height: 1.6;
+            font-size: 1.1rem;
         }
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
+        
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        /* Media queries untuk Samsung A12 (1080 x 2400) */
+        @media screen and (width: 1080px) and (height: 2400px), 
+               screen and (width: 360px) and (height: 800px) { /* 360x800 adalah ukuran CSS pada 1080x2400 dengan density 3.0 */
+            .header h1 {
+                font-size: 2.2rem;
             }
-
-            .header {
-                padding: 15px;
+            
+            .header p {
+                font-size: 1.1rem;
             }
-
-            .input-section {
-                padding: 20px;
+            
+            input, button {
+                padding: 16px;
+                font-size: 18px;
             }
-
-            input {
-                width: 100%;
-                min-width: unset;
-            }
-
-            button {
-                width: 100%;
-            }
-
-            .message {
-                padding: 20px;
-            }
-
+            
             .message p {
-                font-size: 1rem;
+                font-size: 1.2rem;
+            }
+            
+            .input-section {
+                padding: 24px;
+            }
+        }
+        
+        /* Tambahan media queries untuk handle berbagai perangkat */
+        @media (min-width: 600px) {
+            .input-group {
+                flex-direction: row;
+            }
+            
+            input {
+                flex: 1;
+            }
+            
+            button {
+                width: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .header {
+                margin-bottom: 15px;
+            }
+            
+            .input-section {
+                padding: 16px;
+            }
+            
+            .message {
+                padding: 16px;
+            }
+        }
+        
+        /* Sentuhan untuk perangkat dengan touch input */
+        @media (hover: none) {
+            input, button {
+                font-size: 18px; /* Ukuran font lebih besar untuk touch input */
+            }
+            
+            button {
+                padding: 15px 20px; /* Area sentuh lebih besar */
+                touch-action: manipulation; /* Mengurangi delay ketika disentuh */
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📝 Pesan Perpisahan Kelas</h1>
-        <p>Masukkan kode untuk membuka pesan </p>
-    </div>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Pesan Perpisahan Kelas</h1>
+            <p>Masukkan kode untuk membuka pesan</p>
+        </div>
 
-    <div class="input-section">
-        <input type="text" id="codeInput" placeholder="Masukkan kode pesan...">
-        <button onclick="checkCode()">Buka Pesan</button>
-        <p id="error" class="error">Kode tidak valid!</p>
-    </div>
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="codeInput" placeholder="Masukkan kode pesan..." autocomplete="off">
+                <button onclick="checkCode()">Buka Pesan</button>
+            </div>
+            <p id="error" class="error">Kode tidak valid!</p>
+        </div>
 
-    <div id="messageContainer"></div>
+        <div id="messageContainer"></div>
+    </div>
 
     <script>
         const messages = {
@@ -170,8 +275,28 @@
 
                 // Reset input
                 document.getElementById('codeInput').value = '';
+                
+                // Scroll ke pesan baru dengan delay kecil untuk animasi
+                setTimeout(() => {
+                    messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+                
+                // Vibration API untuk feedback pada perangkat mobile (jika didukung)
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
             } else {
                 errorMessage.style.display = 'block';
+                
+                // Vibration API untuk feedback error (jika didukung)
+                if (navigator.vibrate) {
+                    navigator.vibrate([50, 100, 50]);
+                }
+                
+                // Hilangkan pesan error setelah 3 detik
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
             }
         }
 
@@ -181,6 +306,11 @@
                 checkCode();
             }
         });
+        
+        // Focus ke input saat halaman dimuat
+        window.onload = function() {
+            document.getElementById('codeInput').focus();
+        };
     </script>
 </body>
 </html>
