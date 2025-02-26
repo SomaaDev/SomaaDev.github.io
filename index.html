@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pesan Perpisahan Kelas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        .input-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            display: none;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        .header {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📝 Pesan Perpisahan Kelas</h1>
+        <p>Masukkan kode untuk membuka pesan </p>
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="codeInput" placeholder="Masukkan kode pesan...">
+        <button onclick="checkCode()">Buka Pesan</button>
+        <p id="error" class="error">Kode tidak valid!</p>
+    </div>
+
+    <div id="messageContainer"></div>
+
+    <script>
+        const messages = {
+            K3Y_A1B2C3: "Terima kasih atas semua kenangan indah yang telah kita lalui bersama. Semoga sukses selalu! 🌟",
+            PESAN2: "Waktu berlalu begitu cepat, tapi kenangan kita akan abadi selamanya. Sampai jumpa di puncak kesuksesan! 💫",
+            PESAN3: "Selamat melanjutkan perjalanan! Semoga kita bisa bertemu lagi dengan cerita kesuksesan masing-masing. 🚀",
+            PESAN4: "Terima kasih telah menjadi bagian dari perjalanan ini. Semoga sukses di masa depan! ✨",
+            PESAN5: "Setiap pertemuan pasti ada perpisahan, tapi kenangan kita akan selalu tersimpan di hati. 💝",
+            PESAN6: "Mari kita jadikan perpisahan ini sebagai awal dari pencapaian mimpi-mimpi kita! 🌈",
+            PESAN7: "Semoga kesuksesan selalu menyertai langkahmu di masa depan. Sampai jumpa lagi! 🌟",
+            PESAN8: "Terima kasih atas semua tawa dan canda yang telah kita bagi bersama. 😊",
+            PESAN9: "Semoga perpisahan ini menjadi awal yang baik untuk masa depan kita masing-masing. 🎯",
+            PESAN10: "Jangan lupakan kenangan indah kita. Semoga sukses selalu menyertaimu! 🌺",
+            PESAN11: "Selamat melangkah ke babak kehidupan yang baru. Tetap semangat! 💪",
+            PESAN12: "Terima kasih telah mewarnai hari-hariku di kelas ini. Sampai jumpa di lain kesempatan! 🌈",
+            PESAN13: "Mari kita berjuang untuk mimpi masing-masing. Semoga sukses! 🎊",
+            PESAN14: "Setiap pertemuan adalah pembelajaran berharga. Terima kasih atas semuanya! 📚",
+            PESAN15: "Semoga kita bisa bertemu lagi dalam keadaan yang lebih baik. Keep fighting! 💫",
+            PESAN16: "Terima kasih atas persahabatan yang indah ini. Semoga tetap terjaga selamanya! 🤝",
+            PESAN17: "Selamat menempuh jalan masing-masing. Semoga sukses selalu! 🌟",
+            PESAN18: "Jadikan kenangan ini sebagai motivasi untuk terus maju ke depan! 🎯",
+            PESAN19: "Terima kasih telah menjadi teman yang baik. Sampai jumpa di lain waktu! 👋",
+            PESAN20: "Semoga kesuksesan selalu menyertai langkah kita semua! ⭐",
+            PESAN21: "Mari kita ukir kesuksesan kita masing-masing. Sampai jumpa lagi! 🌟",
+            PESAN22: "Terima kasih atas segala kebersamaan yang telah kita lalui. 🤗",
+            PESAN23: "Semoga perpisahan ini membawa berkah untuk kita semua. 🙏",
+            PESAN24: "Jangan pernah menyerah dalam menggapai mimpimu! 💫",
+            PESAN25: "Terima kasih telah menjadi bagian dari cerita hidupku. 📖",
+            PESAN26: "Semoga sukses selalu menyertai langkah kita semua! 🌟",
+            PESAN27: "Mari kita berjuang untuk masa depan yang lebih baik! 💪",
+            PESAN28: "Terima kasih atas persahabatan yang indah ini. 🤝",
+            PESAN29: "Semoga kita bisa bertemu lagi dalam kesuksesan! 🎊",
+            PESAN30: "Jadikan perpisahan ini sebagai motivasi untuk lebih baik! 🌈",
+            PESAN31: "Terima kasih telah berbagi cerita dan tawa bersama. 😊",
+            PESAN32: "Semoga Allah selalu melindungi langkah kita semua. 🙏",
+            PESAN33: "Mari kita wujudkan mimpi-mimpi kita! 💫",
+            PESAN34: "Terima kasih atas kenangan indah yang tak terlupakan. ✨",
+            PESAN35: "Semoga kesuksesan selalu menyertai kita semua! 🌟",
+            PESAN36: "Sampai jumpa di puncak kesuksesan! 🎯",
+            PESAN37: "Terima kasih dan selamat melangkah ke masa depan yang cerah! ⭐"
+        };
+
+        function checkCode() {
+            const code = document.getElementById('codeInput').value.toUpperCase();
+            const messageContainer = document.getElementById('messageContainer');
+            const errorMessage = document.getElementById('error');
+
+            if (messages[code]) {
+                errorMessage.style.display = 'none';
+                
+                // Buat elemen pesan baru
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message';
+                messageElement.style.display = 'block';
+                messageElement.innerHTML = `
+                    <h3>Pesan ${code}:</h3>
+                    <p>${messages[code]}</p>
+                `;
+
+                // Tambahkan ke container
+                messageContainer.insertBefore(messageElement, messageContainer.firstChild);
+
+                // Reset input
+                document.getElementById('codeInput').value = '';
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Menambahkan event listener untuk tombol Enter
+        document.getElementById('codeInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkCode();
+            }
+        });
+    </script>
+</body>
+</html>
