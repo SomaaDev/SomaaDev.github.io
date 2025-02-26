@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Pesan Perpisahan Kelas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,6 +60,36 @@
             color: red;
             margin-top: 10px;
             display: none;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .input-section {
+                padding: 20px;
+            }
+
+            input {
+                width: 100%;
+                min-width: unset;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .message {
+                padding: 20px;
+            }
+
+            .message p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
